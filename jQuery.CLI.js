@@ -1,41 +1,46 @@
 /*
-jQuery.CLI v0.1
+jQuery.CLI v0.1.1
 pluggable command-line interface
 
-Author: FND
+Author: FND (http://fnd.lewcid.org/blog/)
 License: BSD (http://www.opensource.org/licenses/bsd-license.php)
 Source: http://github.com/FND/jquery/
 
 To Do:
 * documentation
+* Quake-like dropdown console
+* history (previous commands, output buffer)
 */
 
 (function($) {
 
-$.ExMode = function(cmds, options) { // TODO: rename?
-	// TODO: merge commands and options
+var commands, styles, keys;
+
+$.CLI = function(cmds, options) { // TODO: rename?
+	commands = $.extend({}, $.CLI.defaults.commands, cmds);
+	styles = $.extend({}, $.CLI.defaults.styles, options ? options.styles : null);
+	keys = $.extend({}, $.CLI.defaults.keys, options ? options.keys : null);
 	$(document).bind("keypress", null, function(e) {
-		if($.ExMode.blocked()) { // XXX: hacky?
+		if($.CLI.blocked()) { // XXX: hacky?
 			return true;
-		} else if(e.which == $.ExMode.options.keys.trigger) {
-			$.ExMode.init();
+		} else if(e.which == keys.trigger) {
+			$.CLI.init();
 		}
 	});
 };
 
-$.ExMode.init = function() { // TODO: rename?
+$.CLI.init = function() { // TODO: rename?
 	var container = $("#CLI");
 	if(container.length) {
 		container.find("input").focus();
 	} else {
 		container = $("<div id='CLI' />").
-			css($.ExMode.options.styles.shared).
-			css($.ExMode.options.styles.container).
+			css(styles.shared).css(styles.container).
 			appendTo(document.body);
 		$("<input type='text' />").
+			css(styles.shared).css(styles.input).
 			keypress(function(e) {
 				var key = e.keyCode || e.which; // XXX: keyCode required for ESC!?
-				var keys = $.ExMode.options.keys;
 				switch(key) {
 					case keys.confirm:
 						dispatch(this.value);
@@ -47,45 +52,45 @@ $.ExMode.init = function() { // TODO: rename?
 						break;
 				}
 			}).
-			css($.ExMode.options.styles.shared).
-			css($.ExMode.options.styles.input).appendTo(container).focus();
+			appendTo(container).focus();
 	}
 };
 
 // invoke command
 var dispatch = function(cmd) {
 	var params = String.prototype.readBracketedList ? cmd.readBracketedList() : cmd.split(" "); //# readBracketedList is TiddlyWiki-specific
-	cmd = $.ExMode.commands[params.shift()];
+	cmd = commands[params.shift()];
 	if(cmd) {
 		cmd(params);
 	} else {
 		bell();
 	}
-}
+};
 
-// visual bell -- XXX: bloat?
+// visual bell -- XXX: bloat? optional?
 var bell = function() {
 	$("<div />").
-		css($.ExMode.options.styles.cloak).
+		css(styles.cloak).css({
+			width: $(window).width(),
+			height: $(window).height()
+		}).
 		appendTo(document.body).
 		animate({ opacity: 0.1 }, {
-			duration: 10,
+			duration: 50,
 			complete: function() { $(this).remove(); }
 		});
 };
 
 // placeholder method -- XXX: required? -- TODO: rename
-$.ExMode.blocked = function() {
+$.CLI.blocked = function() {
 	return false;
 };
 
-// default commands
-$.ExMode.commands = {
-	print: function(params, place) { $(document.body).prepend(params.join(" ")); } // placeholder command
-};
-
 // default options
-$.ExMode.options = { // TODO: rename to .defaults
+$.CLI.defaults = {
+	commands: {
+		print: function(params, place) { $(document.body).prepend(params.join(" ")); }
+	},
 	keys: {
 		trigger: 58, // colon (charCode) -- TODO: rename
 		confirm: 13, // ENTER (keyCode) -- XXX: TiddlyWiki also uses keycode 10!?
@@ -110,13 +115,9 @@ $.ExMode.options = { // TODO: rename to .defaults
 			position: "absolute",
 			top: 0,
 			left: 0,
-			width: $(document).attr("width"), // XXX: time of calculation relevant!
-			height: $(document).attr("height"), // XXX: time of calculation relevant!
 			backgroundColor: "#000"
 		}
 	}
 };
 
 })(jQuery);
-
-jQuery.ExMode(); // DEBUG
