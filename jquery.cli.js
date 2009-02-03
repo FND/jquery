@@ -1,5 +1,5 @@
 /*
-jQuery.CLI v0.1.1
+jQuery.CLI v0.1.2
 pluggable command-line interface
 
 Author: FND (http://fnd.lewcid.org/blog/)
@@ -8,8 +8,10 @@ Source: http://github.com/FND/jquery/
 
 To Do:
 * documentation
+* output buffer
+* command history
+* support for auto-completion
 * Quake-like dropdown console
-* history (previous commands, output buffer)
 */
 
 (function($) {
@@ -20,7 +22,7 @@ $.CLI = function(cmds, options) { // TODO: rename?
 	commands = $.extend({}, $.CLI.defaults.commands, cmds);
 	styles = $.extend({}, $.CLI.defaults.styles, options ? options.styles : null);
 	keys = $.extend({}, $.CLI.defaults.keys, options ? options.keys : null);
-	$(document).bind("keypress", null, function(e) {
+	$(document).keypress(function(e) {
 		if($.CLI.blocked()) { // XXX: hacky?
 			return true;
 		} else if(e.which == keys.trigger) {
