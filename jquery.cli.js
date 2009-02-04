@@ -1,5 +1,5 @@
 /*
-jQuery.CLI v0.2.0
+jQuery.CLI v0.2.1
 pluggable command-line interface
 
 Author: FND (http://fnd.lewcid.org/blog/)
@@ -16,10 +16,10 @@ To Do:
 
 (function($) {
 
-var commands, styles, keys;
+var cmds, styles, keys;
 
-$.CLI = function(cmds, options) { // TODO: rename?
-	commands = $.extend({}, $.CLI.defaults.commands, cmds);
+$.CLI = function(commands, options) { // TODO: rename?
+	cmds = $.extend({}, $.CLI.defaults.commands, commands);
 	styles = $.extend({}, $.CLI.defaults.styles, options ? options.styles : null);
 	keys = $.extend({}, $.CLI.defaults.keys, options ? options.keys : null);
 	$(document).keypress(function(e) {
@@ -29,8 +29,8 @@ $.CLI = function(cmds, options) { // TODO: rename?
 			$.CLI.init();
 		}
 	});
-	// suppress keyboard events for input fields -- XXX: only affects already-existing elements
-	$("input[type=text], input[type=password], textarea").
+	// suppress custom keyboard events for input fields
+	$("input[type=text], input[type=password], textarea"). // N.B.: only affects existing elements - TODO: use live events?
 		focus(function() { $.CLI.DISABLE_KEY_HANDLERS = true; }).
 		blur(function() { $.CLI.DISABLE_KEY_HANDLERS = false; });
 };
@@ -67,7 +67,7 @@ $.CLI.init = function() { // TODO: rename to toggle?
 // invoke command
 var dispatch = function(cmd) {
 	var params = String.prototype.readBracketedList ? cmd.readBracketedList() : cmd.split(" "); //# readBracketedList is TiddlyWiki-specific
-	cmd = commands[params.shift()];
+	cmd = cmds[params.shift()];
 	if(cmd) {
 		cmd(params);
 	} else {
