@@ -1,5 +1,5 @@
 /*
-jQuery.CLI v0.1.2
+jQuery.CLI v0.2.0
 pluggable command-line interface
 
 Author: FND (http://fnd.lewcid.org/blog/)
@@ -23,15 +23,21 @@ $.CLI = function(cmds, options) { // TODO: rename?
 	styles = $.extend({}, $.CLI.defaults.styles, options ? options.styles : null);
 	keys = $.extend({}, $.CLI.defaults.keys, options ? options.keys : null);
 	$(document).keypress(function(e) {
-		if($.CLI.blocked()) { // XXX: hacky?
+		if($.CLI.DISABLE_KEY_HANDLERS) {
 			return true;
 		} else if(e.which == keys.trigger) {
 			$.CLI.init();
 		}
 	});
+	// suppress keyboard events for input fields -- XXX: only affects already-existing elements
+	$("input[type=text], input[type=password], textarea").
+		focus(function() { $.CLI.DISABLE_KEY_HANDLERS = true; }).
+		blur(function() { $.CLI.DISABLE_KEY_HANDLERS = false; });
 };
 
-$.CLI.init = function() { // TODO: rename?
+$.CLI.DISABLE_KEY_HANDLERS = false; // TODO: rename?
+
+$.CLI.init = function() { // TODO: rename to toggle?
 	var container = $("#CLI");
 	if(container.length) {
 		container.find("input").focus();
@@ -81,11 +87,6 @@ var bell = function() {
 			duration: 50,
 			complete: function() { $(this).remove(); }
 		});
-};
-
-// placeholder method -- XXX: required? -- TODO: rename
-$.CLI.blocked = function() {
-	return false;
 };
 
 // default options
