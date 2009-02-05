@@ -1,5 +1,5 @@
 /*
-jQuery.CLI v0.2.1
+jQuery.CLI v0.2.2
 pluggable command-line interface
 
 Author: FND (http://fnd.lewcid.org/blog/)
@@ -18,24 +18,19 @@ To Do:
 
 var cmds, styles, keys;
 
-$.CLI = function(commands, options) { // TODO: rename?
+$.CLI = function(commands, options) {
 	cmds = $.extend({}, $.CLI.defaults.commands, commands);
 	styles = $.extend({}, $.CLI.defaults.styles, options ? options.styles : null);
 	keys = $.extend({}, $.CLI.defaults.keys, options ? options.keys : null);
 	$(document).keypress(function(e) {
-		if($.CLI.DISABLE_KEY_HANDLERS) {
+		// suppress custom keyboard events for input fields
+		if($.inArray(e.target.nodeName.toUpperCase(), ["INPUT", "TEXTAREA"]) != -1) {
 			return true;
 		} else if(e.which == keys.trigger) {
 			$.CLI.init();
 		}
 	});
-	// suppress custom keyboard events for input fields
-	$("input[type=text], input[type=password], textarea"). // N.B.: only affects existing elements - TODO: use live events?
-		focus(function() { $.CLI.DISABLE_KEY_HANDLERS = true; }).
-		blur(function() { $.CLI.DISABLE_KEY_HANDLERS = false; });
 };
-
-$.CLI.DISABLE_KEY_HANDLERS = false; // TODO: rename?
 
 $.CLI.init = function() { // TODO: rename to toggle?
 	var container = $("#CLI");
