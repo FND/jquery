@@ -4,12 +4,61 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>jQuery idioms</title>
+	<style type="text/css">
+		h1,
+		h2,
+		h3 {
+			margin: 0.5em 0 0.2em;
+		}
+
+		pre {
+			margin: 10px;
+			padding: 5px;
+			color: #080;
+			background-color: #EEE;
+		}
+	</style>
 </head>
 
 <body>
 	<h1>jQuery idioms</h1>
 
-	<h2>dynamically generating nested element structures</h2>
+	<ul>
+		<li>
+			<a href="#generating_multiple">dynamically generating multiple elements</a>
+		</li>
+		<li>
+			<a href="#generating_nested">dynamically generating nested element structures</a>
+		</li>
+	</ul>
+
+	<h2 id="generating_multiple">dynamically generating multiple elements</h2>
+
+	<h3>before</h3>
+	<pre>
+var entries = ["foo", "bar", "baz"];
+
+var list = $("&lt;ul /&gt;").appendTo(wrapper);
+$.each(entries, function(i, item) {
+	$("&lt;li /&gt;").text(item).appendTo(list);
+});
+	</pre>
+
+	<h3>after</h3>
+	<pre>
+var entries = ["foo", "bar", "baz"];
+
+$("&lt;ul /&gt;").
+	append($.map(entries, function(item, i) {
+		return $("&lt;li /&gt;").text(item)[0]
+	})).
+	appendTo(wrapper);
+	</pre>
+	<p>
+		Note that <code>map</code> returns DOM elements, not jQuery objects.
+	</p>
+
+	<h2 id="generating_nested">dynamically generating nested element structures</h2>
 
 	<h3>before</h3>
 	<pre>
@@ -28,7 +77,7 @@ $("&lt;div /&gt;").
 	append("&lt;h4 /&gt;").children(":last").
 		text("dynamic elements").addClass("subheading").
 		end().
-	append("&lt;ul /&gt;").children(":last").
+	append("&lt;dl /&gt;").children(":last").
 		append("&lt;dt /&gt;").children(":last").text("foo").end().
 		append("&lt;dd /&gt;").children(":last").text("lorem ipsum").end().
 		append("&lt;dt /&gt;").children(":last").text("bar").end().
@@ -57,7 +106,7 @@ $("&lt;div /&gt;").
 	create("&lt;h4 /&gt;").
 		text("dynamic elements").addClass("subheading").
 		end().
-	create("&lt;ul /&gt;").
+	create("&lt;dl /&gt;").
 		create("&lt;dt /&gt;").text("foo").end().
 		create("&lt;dd /&gt;").text("lorem ipsum").end().
 		create("&lt;dt /&gt;").text("bar").end().
@@ -67,32 +116,7 @@ $("&lt;div /&gt;").
 	appendTo(wrapper);
 	</pre>
 
-	<h2>dynamically generating multiple elements</h2>
-
-	<h3>before</h3>
-	<pre>
-var entries = ["foo", "bar", "baz"];
-
-var list = $("&lt;ul /&gt;").appendTo(wrapper);
-$.each(entries, function(i, item) {
-	$("&lt;li /&gt;").text(item).appendTo(list);
-});
-	</pre>
-
-	<h3>after</h3>
-	<pre>
-var entries = ["foo", "bar", "baz"];
-
-$("&lt;ul /&gt;").
-	append($.map(entries, function(item, i) {
-		return $("&lt;li /&gt;").text(item)[0]
-	})).
-	appendTo(wrapper);
-	</pre>
-	<p>
-		Note that <code>map</code> returns DOM elements, not jQuery objects.
-	</p>
-
+	<!-- dynamic demos -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
