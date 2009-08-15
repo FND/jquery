@@ -12,6 +12,7 @@ To Do:
 * command history
 * support for auto-completion
 * Quake-like dropdown console
+* Ubiquity-like API for commands
 */
 
 (function($) {
@@ -47,6 +48,7 @@ $.CLI.init = function() { // TODO: rename to toggle?
 				switch(key) {
 					case keys.confirm:
 						dispatch(this.value);
+						/*jsl:fallthru*/
 					case keys.confirm:
 					case keys.abort:
 						$(this).parent().remove();
