@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>jQuery idioms</title>
+</head>
+
+<body>
+	<h1>jQuery idioms</h1>
+
+	<h2>dynamically generating nested element structures</h2>
+
+	<h3>before</h3>
+	<pre>
+var container = $("&lt;div /&gt;").appendTo(wrapper);
+$("&lt;h4 /&gt;").text("dynamic elements").addClass("subheading").appendTo(container);
+var list = $("&lt;dl /&gt;").fadeIn("slow").appendTo(container);
+$("&lt;dt /&gt;").text("foo").appendTo(list);
+$("&lt;dd /&gt;").text("lorem ipsum").appendTo(list);
+$("&lt;dt /&gt;").text("bar").appendTo(list);
+$("&lt;dd /&gt;").text("dolor sit amet").appendTo(list);
+	</pre>
+
+	<h3>after</h3>
+	<pre>
+$("&lt;div /&gt;").
+	append("&lt;h4 /&gt;").children(":last").
+		text("dynamic elements").addClass("subheading").
+		end().
+	append("&lt;ul /&gt;").children(":last").
+		append("&lt;dt /&gt;").children(":last").text("foo").end().
+		append("&lt;dd /&gt;").children(":last").text("lorem ipsum").end().
+		append("&lt;dt /&gt;").children(":last").text("bar").end().
+		append("&lt;dd /&gt;").children(":last").text("dolor sit amet").end().
+		fadeIn("slow").
+		end().
+	appendTo(wrapper);
+	</pre>
+	<p>
+		When appending an element, it is selected and modified, then the selection returns to the parent.
+	</p>
+	<p>
+		The key is that <code>append</code> supports HTML as argument for creating new objects, which
+		allows for elaborate chaining.
+		(This might seem obvious in hindsight... )
+	</p>
+	<p>
+		A simple utility method could be used to increase expressiveness:
+	</p>
+	<pre>
+$.fn.create = function(html) {
+	return this.append(html).children(":last");
+};
+
+$("&lt;div /&gt;").
+	create("&lt;h4 /&gt;").
+		text("dynamic elements").addClass("subheading").
+		end().
+	create("&lt;ul /&gt;").
+		create("&lt;dt /&gt;").text("foo").end().
+		create("&lt;dd /&gt;").text("lorem ipsum").end().
+		create("&lt;dt /&gt;").text("bar").end().
+		create("&lt;dd /&gt;").text("dolor sit amet").end().
+		fadeIn("slow").
+		end().
+	appendTo(wrapper);
+	</pre>
+
+	<h2>dynamically generating multiple elements</h2>
+
+	<h3>before</h3>
+	<pre>
+var entries = ["foo", "bar", "baz"];
+
+var list = $("&lt;ul /&gt;").appendTo(wrapper);
+$.each(entries, function(i, item) {
+	$("&lt;li /&gt;").text(item).appendTo(list);
+});
+	</pre>
+
+	<h3>after</h3>
+	<pre>
+var entries = ["foo", "bar", "baz"];
+
+$("&lt;ul /&gt;").
+	append($.map(entries, function(item, i) {
+		return $("&lt;li /&gt;").text(item)[0]
+	})).
+	appendTo(wrapper);
+	</pre>
+	<p>
+		Note that <code>map</code> returns DOM elements, not jQuery objects.
+	</p>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function() {
+
+		var evaluateContents = function(ev) {
+			var code = $(this).prev().text();
+			var wrapper = $('<div class="sample" />').
+				css({ backgroundColor: "#EEE", marginLeft: "5em", padding: "5px" }).
+				insertAfter(this);
+			eval(code);
+		};
+		$("pre").after('<input type="button" value="test" title="evaluate code" />').next().
+			click(evaluateContents);
+
+		});
+	</script>
+</body>
+
+</html>
