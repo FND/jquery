@@ -7,7 +7,8 @@
 	<style type="text/css">
 		h1,
 		h2,
-		h3 {
+		h3,
+		h4 {
 			margin: 0.5em 0 0.2em;
 		}
 
@@ -15,7 +16,14 @@
 			margin: 10px;
 			padding: 5px;
 			color: #080;
-			background-color: #EEE;
+			background-color: #F8F8F8;
+		}
+
+		.sample {
+			margin: 10px 10px 10px 5em;
+			border: 1px solid #BABA45;
+			padding: 5px;
+			background-color: #F5F5B5;
 		}
 	</style>
 </head>
@@ -63,7 +71,7 @@ $("&lt;ul /&gt;").
 	<h3>before</h3>
 	<pre>
 var container = $("&lt;div /&gt;").appendTo(wrapper);
-$("&lt;h4 /&gt;").text("dynamic elements").addClass("subheading").appendTo(container);
+$("&lt;h4 /&gt;").addClass("subheading").text("dynamic elements").appendTo(container);
 var list = $("&lt;dl /&gt;").fadeIn("slow").appendTo(container);
 $("&lt;dt /&gt;").text("foo").appendTo(list);
 $("&lt;dd /&gt;").text("lorem ipsum").appendTo(list);
@@ -75,7 +83,7 @@ $("&lt;dd /&gt;").text("dolor sit amet").appendTo(list);
 	<pre>
 $("&lt;div /&gt;").
 	append("&lt;h4 /&gt;").children(":last").
-		text("dynamic elements").addClass("subheading").
+		addClass("subheading").text("dynamic elements").
 		end().
 	append("&lt;dl /&gt;").children(":last").
 		append("&lt;dt /&gt;").children(":last").text("foo").end().
@@ -104,7 +112,7 @@ $.fn.create = function(html) {
 
 $("&lt;div /&gt;").
 	create("&lt;h4 /&gt;").
-		text("dynamic elements").addClass("subheading").
+		addClass("subheading").text("dynamic elements").
 		end().
 	create("&lt;dl /&gt;").
 		create("&lt;dt /&gt;").text("foo").end().
@@ -123,14 +131,11 @@ $("&lt;div /&gt;").
 
 		var evaluateContents = function(ev) {
 			var code = $(this).prev().text();
-			var wrapper = $('<div class="sample" />').
-				css({ backgroundColor: "#EEE", marginLeft: "5em", padding: "5px" }).
-				insertAfter(this);
+			var wrapper = $('<div class="sample" />').insertAfter(this);
 			eval(code);
 		};
 		$("pre").after('<input type="button" value="test" title="evaluate code" />').next().
 			click(evaluateContents);
-
 		});
 	</script>
 </body>
