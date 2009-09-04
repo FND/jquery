@@ -2,9 +2,9 @@
 jQuery.CLI v0.2.2
 pluggable command-line interface
 
-Author: FND (http://fnd.lewcid.org/blog/)
+Author: FND (http://fnd.lewcid.org)
 License: BSD (http://www.opensource.org/licenses/bsd-license.php)
-Source: http://github.com/FND/jquery/
+Source: http://github.com/FND/jquery
 
 To Do:
 * documentation
@@ -13,6 +13,7 @@ To Do:
 * support for auto-completion
 * Quake-like dropdown console
 * Ubiquity-like API for commands
+* tests
 */
 
 (function($) {
