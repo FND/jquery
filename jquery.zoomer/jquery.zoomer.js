@@ -12,9 +12,9 @@ jQuery.fn.zoomer = function(target, options) { // XXX: rename args
 
 	var winWidth = $(window).width();
 	var winHeight = $(window).height();
-	var determineStyle = function(el) {
+	var determineStyle = function(el, pos) {
 		el = $(el);
-		var pos = el.position();
+		pos = pos || el.position();
 		return {
 			position: "absolute",
 			top: pos.top,
@@ -24,7 +24,10 @@ jQuery.fn.zoomer = function(target, options) { // XXX: rename args
 		};
 	};
 	startStyles = determineStyle(this[0]);
-	endStyles = determineStyle(target);
+	var bullseye = $("<span />").prependTo(target);
+	endStyles = determineStyle(target, bullseye.position());
+	bullseye.remove();
+	endStyles.margin = 0;
 	endStyles.fontSize = $(target).css("font-size");
 	endStyles.opacity = 0.1;
 
