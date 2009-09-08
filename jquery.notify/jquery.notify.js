@@ -7,6 +7,7 @@ License: BSD (http://www.opensource.org/licenses/bsd-license.php)
 Source: http://github.com/FND/jquery
 
 To Do:
+* support for ERROR type (not WARNING, INFO or DEBUG though)
 * code sanitizing
 * documentation
 * rename (possible clash existing plugin)?
