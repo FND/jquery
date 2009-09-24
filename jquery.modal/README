@@ -1,0 +1,5 @@
+jQuery.modal
+yet another modal dialog
+
+based on Mike Mahemoff's plugin:
+    http://svn.tiddlywiki.org/Trunk/contributors/MichaelMahemoff/lib/modal/
