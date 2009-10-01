@@ -108,19 +108,19 @@ $("&lt;div /&gt;").
 		A simple utility method could be used to increase expressiveness:
 	</p>
 	<pre>
-$.fn.create = function(html) {
+$.fn.attach = function(html) {
 	return this.append(html).children(":last");
 };
 
 $("&lt;div /&gt;").
-	create("&lt;h4 /&gt;").
+	attach("&lt;h4 /&gt;").
 		addClass("subheading").text("dynamic elements").
 		end().
-	create("&lt;dl /&gt;").
-		create("&lt;dt /&gt;").text("foo").end().
-		create("&lt;dd /&gt;").text("lorem ipsum").end().
-		create("&lt;dt /&gt;").text("bar").end().
-		create("&lt;dd /&gt;").text("dolor sit amet").end().
+	attach("&lt;dl /&gt;").
+		attach("&lt;dt /&gt;").text("foo").end().
+		attach("&lt;dd /&gt;").text("lorem ipsum").end().
+		attach("&lt;dt /&gt;").text("bar").end().
+		attach("&lt;dd /&gt;").text("dolor sit amet").end().
 		fadeIn("slow").
 		end().
 	appendTo(wrapper);

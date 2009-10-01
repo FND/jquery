@@ -37,8 +37,8 @@ $.modal = function(html, options) {
 			border: "1px solid #666", // TODO: customizable
 			background: "#fff" // TODO: customizable
 		}).
-		create("<div />").css({ margin: "10px" }).html(html).end().
-		create("<div>X</div>"). // XXX: blergh!
+		attach("<div />").css({ margin: "10px" }).html(html).end().
+		attach("<div>X</div>"). // XXX: blergh!
 			css({
 				position: "absolute",
 				top: "-1.2em",
@@ -57,7 +57,7 @@ $.modal = function(html, options) {
 	};
 };
 
-$.fn.create = function(html) {
+$.fn.attach = function(html) {
 	return this.append(html).children(":last");
 };
 
