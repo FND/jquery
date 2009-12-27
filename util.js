@@ -16,4 +16,25 @@ $.fn.multipend = function(items, generator) { // TODO: rename
 	}));
 };
 
+// templating using "<% ... %>" (expressions) and "<%= ... %>" (values)
+// adapted from John Resig and Jeremy Ashkenas (MIT License)
+// http://ejohn.org/blog/javascript-micro-templating/
+// http://github.com/documentcloud/underscore
+$.fn.template = function(data) {
+	var str = this.text();
+	var fn = new Function("obj",
+		"var p=[],print=function(){p.push.apply(p,arguments);};" +
+		"with(obj){p.push(\'" +
+		str
+			.replace(/[\r\t\n]/g, " ")
+			.split("<%").join("\t")
+			.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+			.replace(/\t=(.*?)%>/g, "',$1,'")
+			.split("\t").join("');")
+			.split("%>").join("p.push('")
+			.split("\r").join("\\'") +
+		"');}return jQuery(p.join(''));");
+	return data ? fn(data) : fn;
+};
+
 )(jQuery);
