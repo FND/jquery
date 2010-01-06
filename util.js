@@ -37,4 +37,4 @@ $.fn.template = function(data) {
 	return data ? fn(data) : fn;
 };
 
-)(jQuery);
+})(jQuery);
