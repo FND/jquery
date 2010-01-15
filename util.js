@@ -23,7 +23,7 @@ $.fn.multipend = function(items, generator) { // TODO: rename
 $.fn.template = function(data) {
 	var str = this.text();
 	var fn = new Function("obj",
-		"var p=[],print=function(){p.push.apply(p,arguments);};" +
+		"var p=[];" +
 		"with(obj){p.push(\'" +
 		str
 			.replace(/[\r\t\n]/g, " ")
