@@ -25,6 +25,7 @@ var dispatch = function() {
 		var options = queue.shift();
 		_ajax.apply($, [options]);
 	}
+	$(document).trigger("ajaxQueue", { pending: pending });
 };
 
 })(jQuery);
