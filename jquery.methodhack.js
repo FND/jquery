@@ -8,11 +8,7 @@ $.ajax = function(options) {
 		options.type = "POST";
 		options.beforeSend = function(xhr) {
 			xhr.setRequestHeader("X-HTTP-Method", method);
-			if(setup) {
-				return setup.apply(this, arguments);
-			} else {
-				return true;
-			}
+			return setup ? setup.apply(this, arguments) : true;
 		};
 	}
 	_ajax.apply(this, arguments);
