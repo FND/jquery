@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>jQuery MinTip: minimal tooltips</title>
+	<link rel="stylesheet" type="text/css" href="jquery.mintip.css">
+</head>
+
+<body>
+	<p>
+		lorem <span class="hint" data-tooltip="foo bar">ipsum</span>
+		dolor <span class="hint">sit</span> amet
+	</p>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" type="text/javascript"></script>
+	<script src="jquery.mintip.js" type="text/javascript"></script>
+	<script type="text/javascript">
+$('.hint[data-tooltip]').mintip();
+$(".hint:not([data-tooltip])").mintip({ content: "lorem ... ipsum" });
+// XXX: DEBUG
+$(".hint, .mintip").
+	live("mouseenter", function(ev) {
+		$(this).css({ backgroundColor: "#AAE" });
+	}).live("mouseleave", function(ev) {
+		$(this).css({ backgroundColor: "transparent" });
+	});
+	</script>
+</body>
+
+</html>
