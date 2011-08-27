@@ -25,8 +25,10 @@ $.fn.mintip = function(options) {
 		origin.data("mintip", tip);
 		return tip[0];
 	});
-	this.live("mouseenter", onEnter).live("mouseleave", onLeave); // XXX: `live` appropriate?
-	$(tips).mouseenter(stopTimer).mouseleave(onLeave); // XXX: regular bind inefficient?
+	// XXX: regular handler binding inefficient; use `live` or `delegate`!?
+	this.mouseenter(onEnter).mouseleave(onLeave);
+	$(tips).mouseenter(stopTimer).mouseleave(onLeave);
+	return this;
 };
 
 onEnter = function(ev) {
