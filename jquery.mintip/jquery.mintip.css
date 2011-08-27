@@ -2,3 +2,15 @@
 	border-bottom: 1px dotted;
 	cursor: pointer;
 }
+
+.mintip {
+	border 1px solid #333;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	padding: 5px;
+	box-shadow: 3px 3px 5px #333;
+	-webkit-box-shadow: 3px 3px #333;
+	-moz-box-shadow: 3px 3px 5px #333;
+	background-color: #FAFAFA;
+}

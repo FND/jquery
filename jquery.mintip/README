@@ -1,7 +1,33 @@
 jQuery MinTip
 minimal tooltips
 
-Alternatives:
+interaction-friendly; tooltips don't disappear when the cursor leaves the
+origin element, allowing users to select text, click links etc.
+
+default styling (`jquery.mintip.css`) is optional, provided mainly for reference
+
+
+Usage
+
+    $('<p>lorem <span class="hint" data-tooltip="foo bar">ipsum</span></p>').
+        appendTo(document.body);
+    $(".hint").mintip(); // uses `data-tooltip` attribute
+
+    $('<p>dolor <span class="hint">sit</span> amet</p>').
+        appendTo(document.body);
+    $(".hint").mintip({ content: "foo bar" });
+
+    $('<p>hello <span class="hint">world</span></p>').
+        appendTo(document.body);
+    $(".hint").mintip({
+        content: 'consectetur <a href="http://example.org">adipisicing</a> elit',
+        allowHTML: true,
+        delay: 1000 // milliseconds
+    });
+
+
+Alternatives
+
 * http://code.google.com/p/next-msg/
 * http://www.codylindley.com/blogstuff/js/jtip/
 * https://github.com/kswedberg/jquery-cluetip
