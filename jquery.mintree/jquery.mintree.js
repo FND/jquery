@@ -9,7 +9,7 @@ function MinTree(root, options) {
 	this.options = $.extend({}, this.defaults, options);
 	var el = $(root).addClass("mintree"),
 		self = this;
-	$("li", root).each(function(i, node) {
+	$("li ul, li ol", root).closest("li").each(function(i, node) {
 		self.injectToggle(node);
 	});
 	el.on("click", "a.toggle", this.onToggle);
