@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>jQuery MinTree</title>
+	<link rel="stylesheet" href="jquery.mintree.css">
+</head>
+
+<body>
+	<ul class="tree">
+		<li>foo
+			<ul>
+				<li>lorem
+					<ul>
+						<li>aaa</li>
+						<li><a href="#">bbb</a></li>
+						<li>ccc</li>
+					</ul>
+				</li>
+				<li>ipsum
+					<ul>
+						<li>aaa</li>
+						<li><a href="#">bbb</a></li>
+						<li>ccc</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li><a href="#">bar</a>
+			<ul>
+				<li>lorem
+					<ul>
+						<li>aaa</li>
+						<li><a href="#">bbb</a></li>
+						<li>ccc</li>
+					</ul>
+				</li>
+				<li>ipsum
+					<ul>
+						<li>aaa</li>
+						<li><a href="#">bbb</a></li>
+						<li>ccc</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>baz
+			<ol>
+				<li>lorem
+					<ul>
+						<li>aaa</li>
+						<li><a href="#">bbb</a></li>
+						<li>ccc</li>
+					</ul>
+				</li>
+				<li>ipsum
+					<ul>
+						<li>aaa</li>
+						<li><a href="#">bbb</a></li>
+						<li>ccc</li>
+					</ul>
+				</li>
+			</ol>
+		</li>
+	</ul>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+	<script src="jquery.mintree.js"></script>
+	<script>
+(function($) {
+
+$(".tree").mintree();
+
+}(jQuery));
+	</script>
+</body>
+
+</html>

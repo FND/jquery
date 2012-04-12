@@ -1,0 +1,9 @@
+.mintree,
+.mintree ul {
+	list-style-type: none;
+}
+
+.mintree .toggle {
+	margin-right: 0.2em;
+	text-decoration: none;
+}
