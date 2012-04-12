@@ -70,7 +70,12 @@
 	<script>
 (function($) {
 
-$(".tree").mintree();
+$(".tree").mintree({
+	glyphs: {
+		open: "-",
+		closed: "+"
+	}
+});
 
 }(jQuery));
 	</script>
