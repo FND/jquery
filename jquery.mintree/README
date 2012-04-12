@@ -1,0 +1,24 @@
+jQuery MinTree
+minimal collapsible tree
+
+default styling (`jquery.mintree.css`) is optional, provided mainly for
+reference
+
+
+Usage
+
+    $("ul.tree, ol.tree").mintree();
+
+    $("ul.tree").mintree({
+        glyphs: {
+            open: "-",
+            closed: "+"
+        }
+    });
+
+
+Alternatives
+
+* http://jstree.com
+* http://bassistance.de/jquery-plugins/jquery-plugin-treeview/
+* ...
